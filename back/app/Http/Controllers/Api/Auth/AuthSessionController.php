@@ -11,12 +11,12 @@ class AuthSessionController extends Controller
     public function store(LoginRequestForm $request)
     {
         $token = $request->authenticate();
-        return response(['token' => $token]);
+        return response(['token' => $token], 201);
     }
 
     public function destroy()
     {
         auth()->user()->tokens()->delete();
-        return ['message' => 'logged out'];
+        return response()->noContent();
     }
 }
