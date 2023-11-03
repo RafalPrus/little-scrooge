@@ -1,68 +1,46 @@
 <template >
-    <div class="baseform">
-        <form>
-            <h2>Login</h2>
-            <div>
-                <label>Name</label>
-                <input type="text">
-            </div>
-            <div>
-                <label>Passoword</label>
-                <input type="text">
-            </div>
-            <button>Zaloguj</button>
-        </form>
+    <LoginBaseForm @submit="handleClick" />
+    <div v-if="loginData.password">
+        {{ loginData.password }}
+    </div>
+    <div v-if="tokenStore.token">
+        {{ tokenStore.token }}
+    </div>
+    <div v-if="validationErrors.error">
+        {{ validationErrors.error }}
     </div>
 </template>
+<script setup>
+import { provide, reactive } from "vue";
+import axios from 'axios';
+import LoginBaseForm from '@/components/BaseForm/LoginBaseForm.vue';
+import { useTokenStore } from "../stores/counter";
 
+const tokenStore = useTokenStore()
+
+const loginData = reactive({ email: '', password: ''})
+const validationErrors = reactive({error: ''})
+const res = reactive({mess: ''})
+
+provide('loginData', loginData)
+const handleClick = () => {
+    axios.post('http://127.0.0.1:8000/api/login', {
+        email: loginData.email,
+        password: loginData.password}, {
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+        }})
+        .then((response) => {
+            console.log(response)
+            tokenStore.token = response.data.token})
+        .catch((error) => {
+        console.log(error)
+        validationErrors.error = error.response.data.message
+    })
+
+}
+</script>
 <style scoped>
-.baseform {
-    width: max-content;
-    margin: auto;
-    display: block;
-}
 
-form {
-    min-width: 300px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 12px;
-    border: 0px;
-    color:#424242;
-    background-color: #f5f5f5;
-}
-
-h2 {
-    text-align: center;
-}
-
-input {
-    padding: 0.4rem;
-    border-radius: 6px;
-    border: none;
-}
-
-label {
-    margin-top: 1rem;
-}
-
-form div {
-    display: flex;
-    flex-direction: column;
-}
-
-button {
-    border: none;
-    border-radius: 3px;
-    padding: 0.6rem;
-    margin-top: 15px;
-    color: white;
-    font-weight: bold;
-    background-color: #2196f3;
-}
-
-button:hover  {
-    background-color: #1976d2;
-}
 </style>

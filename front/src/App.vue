@@ -1,6 +1,13 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+
+import { useTokenStore } from "@/stores/counter";
+
+const tokenStore = useTokenStore()
+
+const handleClick = () => {
+  tokenStore.token = ''
+}
 </script>
 
 <template>
@@ -10,7 +17,10 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink :to="{name: 'register'}">Register</RouterLink>
-        <RouterLink :to="{name: 'login'}">Login</RouterLink>
+        <RouterLink :to="{name: 'login'}" v-if="! tokenStore.token">Login</RouterLink>
+        <div class="menu" v-if="tokenStore.token">
+          Welcome, <a @click.prevent="handleClick">_name!</a>
+        </div>
       </nav>
     </div>
   </header>
@@ -34,7 +44,8 @@ nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
+  margin: 2rem auto;
+  display:flex;
 }
 
 nav a.router-link-exact-active {
@@ -45,11 +56,26 @@ nav a.router-link-exact-active:hover {
   background-color: transparent;
 }
 
-nav a {
-  display: inline;
+nav > a {
   padding: 0 1rem;
   border-left: 1px solid var(--color-border);
 }
+
+nav > div {
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+div > a {
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+}
+
 
 nav a:first-of-type {
   border: 0;
@@ -67,7 +93,6 @@ nav a:first-of-type {
   }
 
   header .wrapper {
-
     display: flex;
     flex-wrap: wrap;
   }
@@ -79,6 +104,16 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
+  }
+}
+@media (max-width: 1024px) {
+  nav{
+    justify-content:center ;
+  }
+
+  nav > div {
+    padding: 0;
+    padding-left: 1rem;
   }
 }
 </style>
