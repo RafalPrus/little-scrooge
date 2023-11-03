@@ -1,14 +1,3 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-
-import { useTokenStore } from "@/stores/counter";
-
-const tokenStore = useTokenStore()
-
-const handleClick = () => {
-  tokenStore.token = ''
-}
-</script>
 
 <template>
   <header>
@@ -19,13 +8,30 @@ const handleClick = () => {
         <RouterLink :to="{name: 'register'}">Register</RouterLink>
         <RouterLink :to="{name: 'login'}" v-if="! tokenStore.token">Login</RouterLink>
         <div class="menu" v-if="tokenStore.token">
-          Welcome, <a @click.prevent="handleClick">_name!</a>
+          Welcome, 
+          <UserDropdownMenu>
+            <a @click.prevent>_name!</a>
+          </UserDropdownMenu>
         </div>
       </nav>
     </div>
   </header>
     <RouterView />
 </template>
+
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+
+import { useTokenStore } from "@/stores/counter";
+
+import UserDropdownMenu from "@/components/DropdownMenu/UserDropdownMenu.vue"
+
+const tokenStore = useTokenStore()
+
+const handleClick = () => {
+  tokenStore.token = ''
+}
+</script>
 
 <style scoped>
 header {
