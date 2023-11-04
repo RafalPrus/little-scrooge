@@ -30,3 +30,4 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [\App\Http\Controllers\Api\Auth\AuthSessionController::class, 'store'])
         ->name('guest.login');
 });
+

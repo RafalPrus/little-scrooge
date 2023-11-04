@@ -1,16 +1,23 @@
 <template>
 <div class="base-form">
     <form @submit.prevent>
-        <h2>Login</h2>
+        <h2>Rejestracja</h2>
+        <div>
+            <label>Name</label>
+            <input type="text" required v-model="registerData.name">
+        </div>
         <div>
             <label>Email</label>
-            <input type="text" required v-model="loginData.email">
+            <input type="text" required v-model="registerData.email">
         </div>
         <div>
             <label>Password</label>
-            <input type="text" required v-model="loginData.password">
+            <input type="text" required v-model="registerData.password">
         </div>
-        <button @click="handleClick">Zaloguj</button>
+        <button @click="handleRegisterClick">Zarejestruj</button>
+        <div v-if="registerData.error">
+            <p>{{ registerData.error }}</p>
+        </div>
     </form>
 </div>
 </template>
@@ -18,7 +25,7 @@
 <script setup>
 import { inject } from "vue";
 
-const { loginData, handleClick } = inject('loginData')
+const { registerData, handleRegisterClick } = inject('registerData')
 </script>
 
 <style scoped>
@@ -43,6 +50,11 @@ input {
     padding: 0.4rem;
     border-radius: 6px;
     border: none;
+}
+
+p {
+    color: #DC2626;
+    font-size: small;
 }
 
 label {

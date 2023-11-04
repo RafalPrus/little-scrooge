@@ -5,9 +5,9 @@
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink :to="{name: 'register'}">Register</RouterLink>
-        <RouterLink :to="{name: 'login'}" v-if="! tokenStore.token">Login</RouterLink>
-        <div class="menu" v-if="tokenStore.token">
+        <RouterLink :to="{name: 'register'}" v-if="! authStore.token">Register</RouterLink>
+        <RouterLink :to="{name: 'login'}" v-if="! authStore.token">Login</RouterLink>
+        <div class="menu" v-if="authStore.token">
           Welcome, 
           <UserDropdownMenu>
             <a @click.prevent>_name!</a>
@@ -20,16 +20,15 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
 
-import { useTokenStore } from "@/stores/counter";
+import { useAuthStore } from "@/stores/auth.js";
 
 import UserDropdownMenu from "@/components/DropdownMenu/UserDropdownMenu.vue"
 
-const tokenStore = useTokenStore()
+const authStore = useAuthStore()
 
 const handleClick = () => {
-  tokenStore.token = ''
+  authStore.token = ''
 }
 </script>
 

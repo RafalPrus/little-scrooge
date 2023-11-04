@@ -1,14 +1,14 @@
 <script setup>
-import { useTokenStore } from "../stores/counter";
+import { useAuthStore } from "../stores/auth";
 
-const tokenStore = useTokenStore()
+const authStore = useAuthStore()
 </script>
 
 <template>
   <main>
     Home
-    <div v-if="tokenStore.token">
-      <h1>{{ tokenStore.token }}</h1>
+    <div v-if="authStore.token">
+      <h1>{{ authStore.token }}</h1>
     </div>
   </main>
 </template>

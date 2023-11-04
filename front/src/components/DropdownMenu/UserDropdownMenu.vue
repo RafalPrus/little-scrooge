@@ -12,12 +12,13 @@
 </template>
 
 <script setup>
-import { useTokenStore } from "@/stores/counter"
+import { useAuthStore } from "@/stores/auth.js"
 
-const tokenStore = useTokenStore()
+const authStore = useAuthStore()
 
 const handleClick = () => {
-  tokenStore.token = ''
+  authStore.token = ''
+  authStore.name = ''
 }
 </script>
 <style scoped>

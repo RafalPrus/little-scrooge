@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterRequestForm extends FormRequest
 {
@@ -33,6 +34,8 @@ class RegisterRequestForm extends FormRequest
     {
         $credentials = $this->safe()->all();
         $user = User::create($credentials);
-        return $user;
+        Auth::login($user);
+
+        return auth()->user()->createToken('main')->plainTextToken;
     }
 }

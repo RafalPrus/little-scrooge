@@ -11,7 +11,8 @@ class UserController extends Controller
     //
     public function store(RegisterRequestForm $request)
     {
-        $user = $request->save();
-        return response($user, 201);
+        $token = $request->save();
+
+        return response(['token' => $token], 201);
     }
 }

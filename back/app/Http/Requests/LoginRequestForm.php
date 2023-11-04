@@ -16,7 +16,7 @@ class LoginRequestForm extends RegisterRequestForm
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email', 'exists:'.User::class],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string']
         ];
     }
