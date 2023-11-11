@@ -18,7 +18,10 @@ import { useAuthStore } from "../stores/auth";
 
 const authStore = useAuthStore()
 
-const loginData = reactive({ email: '', password: ''})
+const loginData = reactive({
+    email: '',
+    password: ''
+})
 const validationErrors = reactive({error: ''})
 const res = reactive({mess: ''})
 
@@ -33,7 +36,7 @@ const handleClick = () => {
         .then((response) => {
             console.log(response)
             authStore.token = response.data.token
-            validationErrors.error = ''
+            authStore.setUserLogin()
         })
         .catch((error) => {
             console.log(error)

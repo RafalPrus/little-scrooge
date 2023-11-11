@@ -10,7 +10,7 @@
         <div class="menu" v-if="authStore.token">
           Welcome, 
           <UserDropdownMenu>
-            <a @click.prevent>_name!</a>
+            <a @click.prevent>{{ authStore.login }}</a>
           </UserDropdownMenu>
         </div>
       </nav>
@@ -26,6 +26,8 @@ import { useAuthStore } from "@/stores/auth.js";
 import UserDropdownMenu from "@/components/DropdownMenu/UserDropdownMenu.vue"
 
 const authStore = useAuthStore()
+
+console.log('token: ', authStore.token)
 
 const handleClick = () => {
   authStore.token = ''
