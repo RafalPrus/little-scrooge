@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->group(function() {
         return auth()->user();
     })->name('auth.dashboard');
 
+    Route::get('lottery', [\App\Http\Controllers\Api\Auth\LotteryController::class, 'show'])
+        ->name('auth.lottery');
+
     Route::post('logout', [\App\Http\Controllers\Api\Auth\AuthSessionController::class, 'destroy'])
         ->name('auth.logout');
 });
